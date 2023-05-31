@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser, PermissionsMixin)
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 class UserManager(BaseUserManager):
     '''
@@ -64,3 +66,8 @@ class Profile(models.Model):
     updated_date=models.DateTimeField(auto_now=True)
     def __str__(self):
         return(self.user.email)
+
+@receiver(post_save, sender=User)
+def save_profile(sender, instance, created, **kwargs):
+    if created:                  #only when user is being created (not for edit user info)
+        Profile.objects.create(user=instance)
