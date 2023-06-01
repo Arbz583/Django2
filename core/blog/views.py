@@ -1,9 +1,9 @@
 from django.shortcuts import get_object_or_404, render
-from django.views.generic import TemplateView, ListView, DetailView
+from django.views.generic import TemplateView, ListView, DetailView, FormView
 from django.views.generic.base import RedirectView
 
 from .models import Post
-
+from .forms import PostForm
 
 def indexView(request):
     return render(request, 'index.html', {'name':'Hasan'} )
@@ -41,4 +41,10 @@ class PostListView(ListView):
 class PostDetailView(DetailView):
     model = Post
 
-    
+class PostCreateView(FormView):
+    template_name = 'contact.html'
+    form_class = PostForm
+    success_url = '/blog/post'  #if you do not use / at the first go to sequence of current url not this!
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
