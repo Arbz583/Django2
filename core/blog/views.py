@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, render
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView 
 from django.views.generic.base import RedirectView
 
 from .models import Post
@@ -22,3 +22,19 @@ class RedirectToVmusic(RedirectView):
         post=get_object_or_404(Post, pk=kwargs['pk'])
         print(post)
         return super().get_redirect_url(*args, **kwargs)'''
+
+class PostList(ListView):
+    model=Post
+    #queryset=Post.objects.filter(status=False)
+    paginate_by=2
+    #ordering='-id'             #just when using model or queryset but not get_queryset function because we do not return supper in this function
+    
+    
+    # def get_queryset(self):
+    #     posts=Post.objects.all()
+    #     return posts          #must be your object name
+  
+    
+    
+    
+    context_object_name='posts'     #is optional, default is object_list (for rendering in templates)
