@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, render
-from django.views.generic import TemplateView, ListView, DetailView, FormView, CreateView, UpdateView
+from django.views.generic import TemplateView, ListView, DetailView, FormView, CreateView, UpdateView, DeleteView
 from django.views.generic.base import RedirectView
 
 from .models import Post
@@ -63,4 +63,8 @@ class PostEditView(UpdateView):
     model = Post
     #template_name = ".html"       to change post_form
     form_class=PostForm       
+    success_url='/blog/post/'
+    
+class PostDeleteView(DeleteView):
+    model = Post
     success_url='/blog/post/'
