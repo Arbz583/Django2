@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, render
-from django.views.generic import TemplateView, ListView, DetailView, FormView
+from django.views.generic import TemplateView, ListView, DetailView, FormView, CreateView
 from django.views.generic.base import RedirectView
 
 from .models import Post
@@ -41,10 +41,20 @@ class PostListView(ListView):
 class PostDetailView(DetailView):
     model = Post
 
-class PostCreateView(FormView):
-    template_name = 'contact.html'
-    form_class = PostForm
-    success_url = '/blog/post'  #if you do not use / at the first go to sequence of current url not this!
+# class PostCreateView(FormView):
+#     template_name = 'contact.html'
+#     form_class = PostForm
+#     success_url = '/blog/post'  #if you do not use / at the first go to sequence of current url not this!
+#     def form_valid(self, form):
+#         form.save()
+#         return super().form_valid(form)
+    
+class PostCreateView(CreateView):
+    model = Post
+    template_name = "contact.html"
+    fields=['title','content', 'status', 'category', 'published_date']
+    #form_class=PostForm          #second method for show fields
+    success_url='/blog/post/'
     def form_valid(self, form):
-        form.save()
+        form.instance.author=self.request.user     #autocomplete admin fields
         return super().form_valid(form)
