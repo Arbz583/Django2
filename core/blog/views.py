@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, render
-from django.views.generic import TemplateView, ListView, DetailView, FormView, CreateView
+from django.views.generic import TemplateView, ListView, DetailView, FormView, CreateView, UpdateView
 from django.views.generic.base import RedirectView
 
 from .models import Post
@@ -58,3 +58,9 @@ class PostCreateView(CreateView):
     def form_valid(self, form):
         form.instance.author=self.request.user     #autocomplete admin fields
         return super().form_valid(form)
+    
+class PostEditView(UpdateView):
+    model = Post
+    #template_name = ".html"       to change post_form
+    form_class=PostForm       
+    success_url='/blog/post/'

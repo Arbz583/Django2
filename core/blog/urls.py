@@ -13,9 +13,9 @@ urlpatterns = [
     path('go-to-index/', RedirectView.as_view(pattern_name='blog:cbv-index'), ),
     path('go-to-vmusic/<int:pk>/', views.RedirectToVmusic.as_view(),name='redirect to vmusic'), #to change your url! also passing paras in optional.
     path('post/', views.PostListView.as_view(), name='post-list'),
-    path('post/<int:pk>/', views.PostDetailView.as_view(), name='post-detail'),
+    path('post/<int:pk>/', views.PostDetailView.as_view(), name='post-detail'), #only pk or slug is valid!
     path('post/create/', views.PostCreateView.as_view(), name='post-create'),
-
+    path('post/<int:pk>/edit/', views.PostEditView.as_view(), name='post-edit'), 
     
     
     
