@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, render
-from django.views.generic import TemplateView, ListView 
+from django.views.generic import TemplateView, ListView, DetailView
 from django.views.generic.base import RedirectView
 
 from .models import Post
@@ -23,7 +23,7 @@ class RedirectToVmusic(RedirectView):
         print(post)
         return super().get_redirect_url(*args, **kwargs)'''
 
-class PostList(ListView):
+class PostListView(ListView):
     model=Post
     #queryset=Post.objects.filter(status=False)
     paginate_by=2
@@ -38,3 +38,7 @@ class PostList(ListView):
     
     
     context_object_name='posts'     #is optional, default is object_list (for rendering in templates)
+class PostDetailView(DetailView):
+    model = Post
+
+    

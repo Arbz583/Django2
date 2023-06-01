@@ -15,7 +15,7 @@
 
      {% for post in posts %}
      {# Each "contact" is a Contact model object. #}
-     {{ post.title|upper }}<br>
+   <a href="{%url 'blog:post-detail' pk=post.id%}"> {{ post.title|upper }}-{{post.id}}<a/> 
      
  {% endfor %}
  
