@@ -3,7 +3,7 @@ from django.views.generic import TemplateView, ListView, DetailView, FormView, C
 from django.views.generic.base import RedirectView
 from .models import Post
 from .forms import PostForm
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 
 
@@ -25,7 +25,8 @@ class RedirectToVmusic(RedirectView):
         print(post)
         return super().get_redirect_url(*args, **kwargs)'''
 
-class PostListView(LoginRequiredMixin, ListView):
+class PostListView(PermissionRequiredMixin, LoginRequiredMixin, ListView):
+    permission_required='blog.view_post'         #view means read in here!
     model=Post
     #queryset=Post.objects.filter(status=False)
     paginate_by=2
