@@ -1,9 +1,11 @@
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import TemplateView, ListView, DetailView, FormView, CreateView, UpdateView, DeleteView
 from django.views.generic.base import RedirectView
-
 from .models import Post
 from .forms import PostForm
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+
 
 def indexView(request):
     return render(request, 'index.html', {'name':'Hasan'} )
@@ -23,7 +25,7 @@ class RedirectToVmusic(RedirectView):
         print(post)
         return super().get_redirect_url(*args, **kwargs)'''
 
-class PostListView(ListView):
+class PostListView(LoginRequiredMixin, ListView):
     model=Post
     #queryset=Post.objects.filter(status=False)
     paginate_by=2
