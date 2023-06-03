@@ -6,18 +6,18 @@ from django.views.generic.base import RedirectView
 app_name='blog'
 
 urlpatterns = [
-    path('fbv-index', views.indexView, name='fbv-index'),
-    #path('cbv-index', TemplateView.as_view(template_name="index.html",extra_context={'name':'ali'})),
-    path('cbv-index', views.IndexView.as_view(), name='cbv-index' ),
-    path('go-to-django/', RedirectView.as_view(url='https://www.djangoproject.com/')),
-    path('go-to-index/', RedirectView.as_view(pattern_name='blog:cbv-index'), ),
-    path('go-to-vmusic/<int:pk>/', views.RedirectToVmusic.as_view(),name='redirect to vmusic'), #to change your url! also passing paras in optional.
-    path('post/', views.PostListView.as_view(), name='post-list'),
-    path('post/<int:pk>/', views.PostDetailView.as_view(), name='post-detail'), #only pk or slug is valid!
-    path('post/create/', views.PostCreateView.as_view(), name='post-create'),
-    path('post/<int:pk>/edit/', views.PostEditView.as_view(), name='post-edit'), 
-    path('post/<int:pk>/delete/', views.PostDeleteView.as_view(), name='post-delete'), 
-    
+    # path('fbv-index', views.indexView, name='fbv-index'),
+    # #path('cbv-index', TemplateView.as_view(template_name="index.html",extra_context={'name':'ali'})),
+    # path('cbv-index', views.IndexView.as_view(), name='cbv-index' ),
+    # path('go-to-django/', RedirectView.as_view(url='https://www.djangoproject.com/')),
+    # path('go-to-index/', RedirectView.as_view(pattern_name='blog:cbv-index'), ),
+    # path('go-to-vmusic/<int:pk>/', views.RedirectToVmusic.as_view(),name='redirect to vmusic'), #to change your url! also passing paras in optional.
+    # path('post/', views.PostListView.as_view(), name='post-list'),
+    # path('post/<int:pk>/', views.PostDetailView.as_view(), name='post-detail'), #only pk or slug is valid!
+    # path('post/create/', views.PostCreateView.as_view(), name='post-create'),
+    # path('post/<int:pk>/edit/', views.PostEditView.as_view(), name='post-edit'), 
+    # path('post/<int:pk>/delete/', views.PostDeleteView.as_view(), name='post-delete'), 
+    path('post/', views.api_post_list_view, name='api-post-list'), 
     
     
     
