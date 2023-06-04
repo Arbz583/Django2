@@ -1,4 +1,5 @@
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated  #IsAuthenticatedOrReadOnly, IsAdminUser=is staff
 from rest_framework.response import Response
 from .serializers import PostSerializer
 from ...models import Post
@@ -46,6 +47,7 @@ def postDetail(request, id):
 
 
 @api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])               #must be after api_view decorator
 def postList(request):
     if request.method=="GET":
         post=Post.objects.filter(status=True)
