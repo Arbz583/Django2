@@ -1,5 +1,5 @@
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated  #IsAuthenticatedOrReadOnly, IsAdminUser=is staff
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly #, IsAdminUser=is staff
 from rest_framework.response import Response
 from .serializers import PostSerializer
 from ...models import Post
@@ -31,6 +31,7 @@ from django.shortcuts import get_object_or_404
 #         return Response({'detail':'post does not exist'}, status=status.HTTP_404_NOT_FOUND)
 
 @api_view(['GET','PUT', 'DELETE'])
+@permission_classes([IsAuthenticatedOrReadOnly])  
 def postDetail(request, id):
     post=get_object_or_404(Post, pk=id)
     if request.method=="GET":
