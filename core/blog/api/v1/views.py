@@ -29,11 +29,17 @@ from django.shortcuts import get_object_or_404
 #     except Post.DoesNotExist:
 #         return Response({'detail':'post does not exist'}, status=status.HTTP_404_NOT_FOUND)
 
-@api_view()
+@api_view(['GET','PUT'])
 def postDetail(request, id):
     post=get_object_or_404(Post, pk=id)
-    serializer=PostSerializer(post)
-    return Response(serializer.data)
+    if request.method=="GET":
+        serializer=PostSerializer(post)
+        return Response(serializer.data)
+    elif request.method=="PUT":
+        serializer=PostSerializer(post, data=request.data)  #if you do not use post, it be created rather than updating
+        serializer.is_valid(raise_exception=True) 
+        serializer.save()
+        return Response(serializer.data) 
 
 @api_view(['GET', 'POST'])
 def postList(request):
