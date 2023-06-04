@@ -29,7 +29,7 @@ from django.shortcuts import get_object_or_404
 #     except Post.DoesNotExist:
 #         return Response({'detail':'post does not exist'}, status=status.HTTP_404_NOT_FOUND)
 
-@api_view(['GET','PUT'])
+@api_view(['GET','PUT', 'DELETE'])
 def postDetail(request, id):
     post=get_object_or_404(Post, pk=id)
     if request.method=="GET":
@@ -40,6 +40,10 @@ def postDetail(request, id):
         serializer.is_valid(raise_exception=True) 
         serializer.save()
         return Response(serializer.data) 
+    elif request.method=="DELETE":
+        post.delete()   
+        return Response({'detail':'item remove successfully'},status=status.HTTP_204_NO_CONTENT )    
+
 
 @api_view(['GET', 'POST'])
 def postList(request):
