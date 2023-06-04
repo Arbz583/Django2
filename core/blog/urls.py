@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from .import views
 from django.views.generic import TemplateView
 from django.views.generic.base import RedirectView
@@ -12,12 +12,12 @@ urlpatterns = [
     # path('go-to-django/', RedirectView.as_view(url='https://www.djangoproject.com/')),
     # path('go-to-index/', RedirectView.as_view(pattern_name='blog:cbv-index'), ),
     # path('go-to-vmusic/<int:pk>/', views.RedirectToVmusic.as_view(),name='redirect to vmusic'), #to change your url! also passing paras in optional.
-    # path('post/', views.PostListView.as_view(), name='post-list'),
-    # path('post/<int:pk>/', views.PostDetailView.as_view(), name='post-detail'), #only pk or slug is valid!
-    # path('post/create/', views.PostCreateView.as_view(), name='post-create'),
-    # path('post/<int:pk>/edit/', views.PostEditView.as_view(), name='post-edit'), 
-    # path('post/<int:pk>/delete/', views.PostDeleteView.as_view(), name='post-delete'), 
-    path('post/', views.api_post_list_view, name='api-post-list'), 
+    path('post/', views.PostListView.as_view(), name='post-list'),
+    path('post/<int:pk>/', views.PostDetailView.as_view(), name='post-detail'), #only pk or slug is valid!
+    path('post/create/', views.PostCreateView.as_view(), name='post-create'),
+    path('post/<int:pk>/edit/', views.PostEditView.as_view(), name='post-edit'), 
+    path('post/<int:pk>/delete/', views.PostDeleteView.as_view(), name='post-delete'), 
+    path('api/v1/', include('blog.api.v1.urls')), 
     
     
     

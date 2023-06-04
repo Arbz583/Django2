@@ -4,8 +4,7 @@ from django.views.generic.base import RedirectView
 from .models import Post
 from .forms import PostForm
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
+
 
 def indexView(request):
     return render(request, 'index.html', {'name':'Hasan'} )
@@ -72,6 +71,3 @@ class PostDeleteView(DeleteView):
     model = Post
     success_url='/blog/post/'
 
-@api_view()    
-def api_post_list_view(request):
-    return Response('OK GUY')
