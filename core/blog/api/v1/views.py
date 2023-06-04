@@ -6,9 +6,9 @@ from rest_framework import status
 from django.shortcuts import get_object_or_404
 
 
-@api_view()
-def postList(request):
-    return Response('OK GUY!')
+# @api_view()
+# def postList(request):
+#     return Response('OK GUY!')
 
 
 # @api_view()
@@ -35,3 +35,8 @@ def postDetail(request, id):
     serializer=PostSerializer(post)
     return Response(serializer.data)
 
+@api_view()
+def postList(request):
+    post=Post.objects.filter(status=True)
+    serializer=PostSerializer(post, many=True)
+    return Response(serializer.data)
