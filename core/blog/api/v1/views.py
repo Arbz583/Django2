@@ -35,8 +35,19 @@ def postDetail(request, id):
     serializer=PostSerializer(post)
     return Response(serializer.data)
 
-@api_view()
+@api_view(['GET', 'POST'])
 def postList(request):
-    post=Post.objects.filter(status=True)
-    serializer=PostSerializer(post, many=True)
-    return Response(serializer.data)
+    if request.method=="GET":
+        post=Post.objects.filter(status=True)
+        serializer=PostSerializer(post, many=True)
+        return Response(serializer.data)
+    elif request.method=="POST":
+        serializer=PostSerializer(data=request.data)
+        # if serializer.is_valid():
+        #     serializer.save()
+        #     return Response(serializer.data)
+        # else:
+        #     return Response(serializer.errors)
+        serializer.is_valid(raise_exception=True)   #paranthesis means if it is ok go on, else show errors
+        serializer.save()
+        return Response(serializer.data)
