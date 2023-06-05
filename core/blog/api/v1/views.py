@@ -3,9 +3,10 @@ from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnl
 from rest_framework.response import Response
 from .serializers import PostSerializer
 from ...models import Post
-from rest_framework import status
+from rest_framework import status, mixins
 from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
+from rest_framework.generics import GenericAPIView, ListAPIView, ListCreateAPIView
 
 
 # @api_view()
@@ -95,7 +96,7 @@ class PostDetail(APIView):
 
 
 
-class PostList(APIView):
+"""class PostList(APIView):
     '''getting a list of posts and creating a new posts '''
 
     permission_classes = [IsAuthenticated]
@@ -111,4 +112,18 @@ class PostList(APIView):
         serializer=PostSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return Response(serializer.data)
+        return Response(serializer.data)"""
+
+# class PostList(GenericAPIView, mixins.ListModelMixin, mixins.CreateModelMixin ):
+#     permission_classes = [IsAuthenticated]
+#     serializer_class=PostSerializer     
+#     queryset=Post.objects.filter(status=True)        
+#     def get(self, request, *args, **kwargs):
+#         queryset=self.get_queryset()
+#         return self.list(request, *args, **kwargs)        
+#     def post(self, request, *args, **kwargs):
+#         return self.create(request, *args, **kwargs)  
+class PostList(ListCreateAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class=PostSerializer     
+    queryset=Post.objects.filter(status=True)   
