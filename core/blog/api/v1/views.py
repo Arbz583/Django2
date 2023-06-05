@@ -5,6 +5,7 @@ from .serializers import PostSerializer
 from ...models import Post
 from rest_framework import status
 from django.shortcuts import get_object_or_404
+from rest_framework.views import APIView
 
 
 # @api_view()
@@ -46,7 +47,7 @@ def postDetail(request, id):
         post.delete()   
         return Response({'detail':'item remove successfully'},status=status.HTTP_204_NO_CONTENT )    
 
-
+'''
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])               #must be after api_view decorator
 def postList(request):
@@ -62,5 +63,25 @@ def postList(request):
         # else:
         #     return Response(serializer.errors)
         serializer.is_valid(raise_exception=True)   #paranthesis means if it is ok go on, else show errors
+        serializer.save()
+        return Response(serializer.data)'''
+
+
+
+class PostList(APIView):
+    '''getting a list of posts and creating a new posts '''
+
+    permission_classes = [IsAuthenticated]
+    serializer_class=PostSerializer              #create a form for post
+    def get(self, request):
+        '''retrieving a list of posts  '''
+        post=Post.objects.filter(status=True)
+        serializer=PostSerializer(post, many=True)
+        return Response(serializer.data)        
+
+    def post(self, request):
+        '''creating a post with a provided data '''
+        serializer=PostSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
