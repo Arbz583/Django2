@@ -137,9 +137,9 @@ class PostModelViewSet(viewsets.ModelViewSet):
     serializer_class=PostSerializer     
     queryset=Post.objects.filter(status=True)   
  
-    @action(methods=['get'], detail=False)    #creating extra url with simple router. detail=false means no arg be sended in url.
+"""    @action(methods=['get'], detail=False)    #creating extra url with simple router. detail=false means no arg be sended in url.
     def get_ok(self, request):
-        return Response({'detail':'ok'})
+        return Response({'detail':'ok'})"""
 
 class CategoryModelViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
