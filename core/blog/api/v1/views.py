@@ -10,7 +10,7 @@ from rest_framework.generics import GenericAPIView, ListAPIView, ListCreateAPIVi
 from .permissions import IsOwnerOrReadOnly
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
-
+from .paginations import DefaultPagination
 
 #Example for ViewSet in CBV
 class PostModelViewSet(viewsets.ModelViewSet):
@@ -21,6 +21,9 @@ class PostModelViewSet(viewsets.ModelViewSet):
     filterset_fields = ['category', 'author', 'author']
     search_fields = ['=title', 'content']  # = means exact match
     ordering_fields = ['published_date']
+    pagination_class = DefaultPagination
+
+
 
 
 class CategoryModelViewSet(viewsets.ModelViewSet):
