@@ -96,7 +96,7 @@ class PostDetail(RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
     serializer_class=PostSerializer     
     queryset=Post.objects.filter(status=True)   
-    lookup_field='id'            #or change id to pk in the url
+    #lookup_field='id'            #or change id to pk in the url
 
 
 """class PostList(APIView):
