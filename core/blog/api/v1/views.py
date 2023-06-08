@@ -7,7 +7,7 @@ from rest_framework import status, mixins, viewsets
 from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.generics import GenericAPIView, ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
-
+from .permissions import IsOwnerOrReadOnly
 
 # @api_view()
 # def postList(request):
@@ -133,7 +133,7 @@ class PostDetail(RetrieveUpdateDestroyAPIView):
 
 #Example for ViewSet in CBV
 class PostModelViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
     serializer_class=PostSerializer     
     queryset=Post.objects.filter(status=True)   
  
