@@ -9,6 +9,48 @@ from rest_framework.views import APIView
 from rest_framework.generics import GenericAPIView, ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from .permissions import IsOwnerOrReadOnly
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import SearchFilter, OrderingFilter
+
+
+#Example for ViewSet in CBV
+class PostModelViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+    serializer_class=PostSerializer     
+    queryset=Post.objects.filter(status=True)   
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    filterset_fields = ['category', 'author', 'author']
+    search_fields = ['=title', 'content']  # = means exact match
+    ordering_fields = ['published_date']
+
+
+class CategoryModelViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    serializer_class=CategorySerializer     
+    queryset=Post.objects.all()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # @api_view()
 # def postList(request):
@@ -132,20 +174,3 @@ class PostDetail(RetrieveUpdateDestroyAPIView):
     serializer_class=PostSerializer     
     queryset=Post.objects.filter(status=True)   """
 
-#Example for ViewSet in CBV
-class PostModelViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
-    serializer_class=PostSerializer     
-    queryset=Post.objects.filter(status=True)   
-    filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['category', 'author', 'author']
-
-
-"""    @action(methods=['get'], detail=False)    #creating extra url with simple router. detail=false means no arg be sended in url.
-    def get_ok(self, request):
-        return Response({'detail':'ok'})"""
-
-class CategoryModelViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticatedOrReadOnly]
-    serializer_class=CategorySerializer     
-    queryset=Post.objects.all()
