@@ -9,7 +9,8 @@ urlpatterns = [
    path('registration/', RegistrationApiView.as_view(),name='registration') ,
   # path('token/login/', ObtainAuthToken.as_view(),name='token-login') ,
    path('token/login/', CustomObtainAuthToken.as_view(),name='token-login') ,
-   
+   path('token/logout/', CustomDiscardAuthToken.as_view(),name='token-logout') ,
+
 
    #change password
    #reset password
