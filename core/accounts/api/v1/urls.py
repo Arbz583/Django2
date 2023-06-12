@@ -11,6 +11,7 @@ urlpatterns = [
 
 
    #change password
+   path('change-password/', ChangePasswordApiView.as_view(),name='change-password') ,
    #reset password
    #login token
    path('token/login/', CustomObtainAuthToken.as_view(),name='token-login') ,
